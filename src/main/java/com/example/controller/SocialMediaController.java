@@ -54,4 +54,12 @@ public class SocialMediaController {
         Integer rowsAffected = messageService.deleteMessageById(messageId);
         return ResponseEntity.ok(rowsAffected);
     }
+
+    @PatchMapping("messages/{messageId}")
+    public ResponseEntity<Integer> updateMessageTextById(@PathVariable Integer messageId,
+                                                         @RequestBody Message message) {
+        String newMessageText = message.getMessageText();
+        int rowsUpdated = messageService.updateMessageTextById(messageId, newMessageText);
+        return ResponseEntity.ok(rowsUpdated);
+    }
 }
