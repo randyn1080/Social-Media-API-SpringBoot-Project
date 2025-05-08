@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Account;
+import com.example.exception.AuthenticationFailedException;
 import com.example.exception.DuplicateUsernameException;
 import com.example.exception.InvalidPasswordException;
 import com.example.exception.InvalidUsernameException;
@@ -19,20 +20,39 @@ public class AccountService {
     }
 
     public Account registerAccount(Account account) {
+        String username = account.getUsername();
+        String password = account.getPassword();
         // check if the username is blank
-        if (account.getUsername() == null || account.getUsername().isBlank()) {
+        if (username == null || username.isBlank()) {
             throw new InvalidUsernameException("Username cannot be blank");
         }
         // check if the password is at least 4 characters
-        if (account.getPassword().length() < 4) {
+        if (password.length() < 4) {
             throw new InvalidPasswordException("Password must be at least 4 characters");
         }
         // check if the username exists
-        Account existingAccount = accountRepository.findByUsername(account.getUsername());
+        Account existingAccount = accountRepository.findByUsername(username);
         if (existingAccount != null) {
             throw new DuplicateUsernameException("Username already exists");
         }
         // save the account and return it with the generated ID
         return accountRepository.save(account);
+    }
+
+        public Account login(Account account) {
+        // ensure fields are not null or empty
+        String username = account.getUsername();
+        String password = account.getPassword();
+        if (username == null || username.isBlank()
+            || password == null || password.isBlank()) {
+            throw new AuthenticationFailedException("Username and password cannot be blank");
+        }
+        // check if username and password match an existing account
+        Account existingAccount = accountRepository.findByUsernameAndPassword(account.getUsername(), account.getPassword());
+        if (existingAccount == null) {
+            throw new AuthenticationFailedException("Invalid username or password");
+        }
+        // if successful, return the account
+        return existingAccount;
     }
 }

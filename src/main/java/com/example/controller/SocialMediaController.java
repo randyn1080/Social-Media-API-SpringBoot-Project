@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.service.*;
 import com.example.entity.*;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /** test
@@ -29,5 +31,11 @@ public class SocialMediaController {
     public ResponseEntity<Account> register(@RequestBody Account newAccount) {
         Account registeredAccount = accountService.registerAccount(newAccount);
         return ResponseEntity.ok(registeredAccount);
+    }
+
+    @PostMapping("login")
+    public ResponseEntity<Account> login(@RequestBody Account account) {
+        Account loggedInAccount = accountService.login(account);
+        return ResponseEntity.ok(loggedInAccount);
     }
 }
