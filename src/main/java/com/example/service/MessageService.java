@@ -47,4 +47,8 @@ public class MessageService {
     public List<Message> getAllMessages() {
         return messageRepository.findAll();
     }
+
+    public Message getMessageById(Integer messageId) {
+        return messageRepository.findById(messageId).orElse(null);
+    }
 }
