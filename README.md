@@ -47,6 +47,7 @@ To-do list:
 
 ### Clone the repository
 git clone https://github.com/randyn1080/Social-Media-API-SpringBoot-Project.git
+
 cd Social-Media-API-SpringBoot-Project
 
 ### Option 1: Run with IntelliJ IDEA (Recommended)
@@ -59,10 +60,12 @@ cd Social-Media-API-SpringBoot-Project
 
 ### Option 2: Command Line (Windows)
 mvn clean compile
+
 mvn exec:java -Dexec.mainClass="com.example.SocialMediaApp"
 
 ### Option 3: Command Line (macOS/Linux/Unix)
 mvn clean compile
+
 mvn exec:java -Dexec.mainClass="com.example.SocialMediaApp"
 
 > Note: Commands work on all platforms (Windows, macOS, Linux, Unix)
